@@ -11,15 +11,12 @@ const secondsEl = document.querySelector('[data-seconds]');
 
 startBtn.addEventListener('click', onStartClick);
 
+startBtn.disabled = true;
 let selectedDate;
 
 function onStartClick() {
   startBtn.disabled = true;
-  if (!selectedDate) {
-    Notiflix.Notify.failure('Please choose a date first');
-    startBtn.disabled = false;
-    return;
-  }
+  input.disabled = true;
   const targetDate = selectedDate.getTime() - Date.now();
   newTime(targetDate);
 
@@ -50,12 +47,16 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
+function formatTime(time) {
+  return time.toString().padStart(2, '0');
+}
+
 function newTime(ms) {
   const time = convertMs(ms);
-  daysEl.textContent = time.days.toString().padStart(2, '0');
-  hoursEl.textContent = time.hours.toString().padStart(2, '0');
-  minutesEl.textContent = time.minutes.toString().padStart(2, '0');
-  secondsEl.textContent = time.seconds.toString().padStart(2, '0');
+  daysEl.textContent = formatTime(time.days);
+  hoursEl.textContent = formatTime(time.hours);
+  minutesEl.textContent = formatTime(time.minutes);
+  secondsEl.textContent = formatTime(time.seconds);
 }
 
 const options = {
@@ -63,9 +64,6 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onOpen(selectedDates) {
-    startBtn.disabled = true;
-  },
   onClose(selectedDates) {
     selectedDate = selectedDates[0];
     if (selectedDate < new Date()) {

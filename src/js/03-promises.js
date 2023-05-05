@@ -26,7 +26,6 @@ function onFormSubmit(e) {
       });
     delayTime += Number(step.value);
   }
-  e.target.reset();
 }
 
 function createPromise(position, delay) {
@@ -35,9 +34,8 @@ function createPromise(position, delay) {
     setTimeout(() => {
       if (shouldResolve) {
         resolve({ position, delay });
-      } else {
-        reject({ position, delay });
       }
+      reject({ position, delay });
     }, delay);
   });
 }
