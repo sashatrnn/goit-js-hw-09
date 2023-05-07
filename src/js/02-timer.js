@@ -18,7 +18,6 @@ function onStartClick() {
   startBtn.disabled = true;
   input.disabled = true;
   const targetDate = selectedDate.getTime() - Date.now();
-  newTime(targetDate);
 
   const intervalId = setInterval(() => {
     const currentTime = Date.now();
